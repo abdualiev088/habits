@@ -1,5 +1,6 @@
 package com.example.habittracker
 
+import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
 import android.view.ContextMenu
@@ -8,24 +9,27 @@ import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.BackEventCompat
-import androidx.core.content.ContextCompat
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.ekn.gruzer.gaugelibrary.ArcGauge
 import com.ekn.gruzer.gaugelibrary.Range
 import com.example.habittracker.databinding.FragmentHabitsBinding
-import com.example.habittracker.recyclerViewAdapter.HabitData
+import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
+import com.example.habittracker.recyclerViewAdapter.MVVM.HabitDatabase
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
+import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModelFactory
 import com.example.habittracker.recyclerViewAdapter.RecyclerViewAdapter
 import com.example.habittracker.recyclerViewAdapter.SwipeCallback
-import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 class HabitsFragment : Fragment() {
@@ -33,6 +37,8 @@ class HabitsFragment : Fragment() {
     private lateinit var binding : FragmentHabitsBinding
 
     private lateinit var viewModel: HabitViewModel
+    private lateinit var habitsRecyclerView: RecyclerView
+    private lateinit var buttonFAB: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +52,31 @@ class HabitsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(HabitViewModel::class.java)
+        habitsRecyclerView = binding.rc
+        val habitAdapter = RecyclerViewAdapter()
+        val rc_manager = LinearLayoutManager(context)
+        habitsRecyclerView.adapter = habitAdapter
+
+        rc_manager.orientation = LinearLayoutManager.VERTICAL
+        habitsRecyclerView.layoutManager = rc_manager
+
+//        viewModel = ViewModelProvider(this).get(HabitViewModel::class.java)
+
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(HabitViewModel::class.java)
+
+        viewModel.allHabits.observe(viewLifecycleOwner, Observer { list ->
+            list?.let {
+                habitAdapter.updateList(it)
+            }
+        })
+
+//        val viewModelFactory = HabitViewModelFactory(requireActivity().application)
+//        viewModel = ViewModelProvider(this, viewModelFactory).get(HabitViewModel::class.java)
+
+
 
         val range = Range()
         range.color = Color.parseColor("#ce0000")
@@ -64,53 +94,52 @@ class HabitsFragment : Fragment() {
             showBottomSheetDialog()
         }
 //        habitList()
-
-
-        observeData(halfGauge)
-        loadData()
+//        observeData(halfGauge)
     }
     private fun showBottomSheetDialog(){
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.bottomsheet_habits)
         bottomSheetDialog.show()
+
+        val editText = bottomSheetDialog.findViewById<EditText>(R.id.habitTitle)
+        val button = bottomSheetDialog.findViewById<Button>(R.id.createHabitBtn)
+        button?.setOnClickListener {
+            if (editText?.text.toString().isNotEmpty()){
+                val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
+                val currentDateAndTime: String = sdf.format(Date())
+
+                val newHabit = EntityHabits(
+                    title = editText!!.text.toString(),
+                    status = false,
+                    time_created = currentDateAndTime)
+                viewModel.addHabit(newHabit)
+                Toast.makeText(context, "${editText.text.toString()} Added", Toast.LENGTH_LONG).show()
+                bottomSheetDialog.hide()
+            }
+        }
     }
 
-    private fun observeData(halfGauge:ArcGauge){
-        viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
-            val habitAdapter = RecyclerViewAdapter(habits)
-            binding.rc.adapter = habitAdapter
-            val rc_manager = LinearLayoutManager(context)
-            rc_manager.orientation = LinearLayoutManager.VERTICAL
-            binding.rc.layoutManager = rc_manager
 
-            halfGauge.value = habits.size.toDouble()
-            halfGauge.maxValue = habits.size.toDouble()
+//    override fun onCreateContextMenu(
+//        menu: ContextMenu,
+//        v: View,
+//        menuInfo: ContextMenu.ContextMenuInfo?
+//    ) {
+//        super.onCreateContextMenu(menu, v, menuInfo)
+//        val inflater = MenuInflater(v.context)
+//        inflater.inflate(R.menu.swipe_buttons, menu)
+//    }
 
+//    private fun attachToRv(rv: RecyclerView){
+//
+//        val swipeController = SwipeCallback()
+//        val touchHelper = ItemTouchHelper(swipeController)
+//        touchHelper.attachToRecyclerView(rv)
+//
+//    }
 
-        })
-    }
-    private fun loadData(){
-        viewModel.loadHabit()
-    }
-
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater = MenuInflater(v.context)
-        inflater.inflate(R.menu.swipe_buttons, menu)
-    }
-
-    private fun attachToRv(rv: RecyclerView){
-
-        val swipeController = SwipeCallback()
-        val touchHelper = ItemTouchHelper(swipeController)
-        touchHelper.attachToRecyclerView(rv)
+    private fun ifNoData(){
 
     }
-
 }
 

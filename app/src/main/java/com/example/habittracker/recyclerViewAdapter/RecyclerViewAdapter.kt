@@ -6,9 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.R
+import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 
-class RecyclerViewAdapter(private val data: Array<HabitData>):
+class RecyclerViewAdapter(
+
+
+):
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+
+    private val data = ArrayList<EntityHabits>()
 
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         val title: TextView
@@ -36,6 +42,17 @@ class RecyclerViewAdapter(private val data: Array<HabitData>):
         holder.status.visibility = if (data[position].status)  View.VISIBLE
         else View.INVISIBLE
 
+    }
+    fun updateList(newList: List<EntityHabits>) {
+        // on below line we are clearing
+        // our notes array list
+        data.clear()
+        // on below line we are adding a
+        // new list to our all notes list.
+        data.addAll(newList)
+        // on below line we are calling notify data
+        // change method to notify our adapter.
+        notifyDataSetChanged()
     }
 
 
