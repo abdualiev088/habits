@@ -64,6 +64,8 @@ dependencies {
 //    Swipe reveal
 //    implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
 
+    implementation("com.airbnb.android:lottie:6.1.0")
+
     val nav_version = "2.7.4"
 
     // Kotlin

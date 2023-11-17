@@ -6,4 +6,5 @@
     <color name="rc_item_background">#EAEAEA</color>
     <color name="status_color">#B3B3B3</color>
     <color name="bottom_background">#F2F1FA</color>
+    <color name="blue">#068FFF</color>
 </resources>

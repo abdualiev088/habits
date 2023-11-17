@@ -46,6 +46,23 @@ class HabitsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHabitsBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(HabitViewModel::class.java)
+
+        viewModel.allHabits.observe(viewLifecycleOwner, Observer { list ->
+            list?.let {
+                if (list.isNotEmpty()){
+                    binding.haveHabitsUi.visibility = View.VISIBLE
+                    binding.noHabitsUi.visibility = View.INVISIBLE
+                }
+                else {
+                    binding.haveHabitsUi.visibility = View.INVISIBLE
+                    binding.noHabitsUi.visibility = View.VISIBLE
+                }
+            }
+        })
         return binding.root
     }
 
@@ -60,12 +77,6 @@ class HabitsFragment : Fragment() {
         rc_manager.orientation = LinearLayoutManager.VERTICAL
         habitsRecyclerView.layoutManager = rc_manager
 
-//        viewModel = ViewModelProvider(this).get(HabitViewModel::class.java)
-
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(HabitViewModel::class.java)
 
         viewModel.allHabits.observe(viewLifecycleOwner, Observer { list ->
             list?.let {

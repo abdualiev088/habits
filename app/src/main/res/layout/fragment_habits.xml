@@ -7,6 +7,42 @@
     tools:context=".HabitsFragment">
 
     <LinearLayout
+        android:id="@+id/noHabitsUi"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="180dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_marginBottom="20dp"
+            app:lottie_rawRes="@raw/empty_animation"
+            android:layout_height="180dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
+            android:text="You don't have Habits to do"/>
+        <TextView
+            android:id="@+id/crateForBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/blue"
+            android:text="@string/textCreate"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/haveHabitsUi"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
