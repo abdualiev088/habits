@@ -2,6 +2,7 @@ package com.example.habittracker
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log.d
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
+import kotlin.properties.Delegates
 
 
 class HabitsFragment : Fragment() {
@@ -34,12 +36,20 @@ class HabitsFragment : Fragment() {
     private lateinit var habitsRecyclerView: RecyclerView
     private lateinit var buttonFAB: FloatingActionButton
 
+    private var countHabits by Delegates.notNull<Double>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHabitsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
@@ -57,11 +67,6 @@ class HabitsFragment : Fragment() {
                 }
             }
         })
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         habitsRecyclerView = binding.rc
         val habitAdapter = RecyclerViewAdapter()
@@ -72,24 +77,36 @@ class HabitsFragment : Fragment() {
         habitsRecyclerView.layoutManager = rc_manager
 
 
-        viewModel.allHabits.observe(viewLifecycleOwner, Observer { list ->
-            list?.let {
-                habitAdapter.updateList(it)
+
+        viewModel.countHabits.observe(viewLifecycleOwner, Observer { count ->
+            count?.let {
+                d("HabitsFragment", "countHabits updated: $count")
+                val range = Range()
+                range.color = Color.parseColor("#000000")
+                range.from = 0.0
+                range.to = 50.0
+
+                val halfGauge = binding.arcGauge
+
+                halfGauge.addRange(range)
+                halfGauge.minValue = 0.0
+                halfGauge.maxValue = count
+                viewModel.allCompletedHabitsCount.observe(viewLifecycleOwner, Observer {countTrue ->
+                    countTrue?.let {
+                        halfGauge.value = countTrue
+                    }
+                })
             }
         })
 
+        viewModel.allHabits.observe(viewLifecycleOwner, Observer { list ->
+            list?.let {
+                habitAdapter.updateList(it)
+//                This is adaptive setting value to dashboard
+                viewModel.updateCountHabits(list.size.toDouble())
+            }
+        })
 
-        val range = Range()
-        range.color = Color.parseColor("#ce0000")
-        range.from = 0.0
-        range.to = 50.0
-
-        val halfGauge = binding.arcGauge
-
-        halfGauge.addRange(range)
-        halfGauge.minValue = 0.0
-        halfGauge.maxValue = 100.0
-        halfGauge.value = 10.0
 
         binding.createTask.setOnClickListener {
             showBottomSheetDialog()
@@ -110,12 +127,9 @@ class HabitsFragment : Fragment() {
                     LocalDateTime.now().toString(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
 
-//                val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
-//                val currentDateAndTime: String = sdf.format(Date())
-
                 val newHabit = EntityHabits(
                     title = editText!!.text.toString(),
-                    status = false,
+                    status = true,
                     time_created = customDate)
                 viewModel.addHabit(newHabit)
                 Toast.makeText(context, "${editText.text.toString()} Added", Toast.LENGTH_LONG).show()

@@ -8,6 +8,7 @@ import java.util.Date
 class HabitRepository(private var habitsDao: HabitsDao) {
 
     val allHabits : LiveData<List<EntityHabits>> = habitsDao.getAllHabits()
+    val getCompletedHabitsCount: LiveData<Double> = habitsDao.getCompletedHabitsCount()
 
     suspend fun insert(habit: EntityHabits){
         habitsDao.insert(habit)
@@ -16,6 +17,7 @@ class HabitRepository(private var habitsDao: HabitsDao) {
     suspend fun delete(habit: EntityHabits){
         habitsDao.delete(habit)
     }
+
 
 
 }

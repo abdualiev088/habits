@@ -13,12 +13,18 @@ import kotlinx.coroutines.launch
 class HabitViewModel(application: Application): AndroidViewModel(application) {
 
     val allHabits : LiveData<List<EntityHabits>>
+    private val _countHabits = MutableLiveData<Double>()
+    val countHabits: LiveData<Double> get() = _countHabits
+
+    val allCompletedHabitsCount: LiveData<Double>
+
     val repository: HabitRepository
 
     init {
         val dao = HabitDatabase.getDatabase(application).getNotesDao()
         repository = HabitRepository(dao)
         allHabits = repository.allHabits
+        allCompletedHabitsCount = repository.getCompletedHabitsCount
     }
 
     fun deleteHabit(habitData: EntityHabits) = viewModelScope.launch(Dispatchers.IO){
@@ -27,6 +33,10 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
 
     fun addHabit(habitData: EntityHabits) = viewModelScope.launch(Dispatchers.IO){
         repository.insert(habitData)
+    }
+
+    fun updateCountHabits(value: Double) {
+        _countHabits.value = value
     }
 
 

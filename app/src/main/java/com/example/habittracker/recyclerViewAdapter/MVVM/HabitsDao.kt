@@ -18,4 +18,7 @@ interface HabitsDao {
 
     @Query("SELECT * from habits ORDER BY time_created DESC")
     fun getAllHabits(): LiveData<List<EntityHabits>>
+
+    @Query("SELECT COUNT(status) from habits WHERE status == 1")
+    fun getCompletedHabitsCount(): LiveData<Double>
 }
