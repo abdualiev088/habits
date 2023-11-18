@@ -16,6 +16,6 @@ interface HabitsDao {
     @Delete
     suspend fun delete(habit: EntityHabits)
 
-    @Query("SELECT * from habits")
+    @Query("SELECT * from habits ORDER BY time_created DESC")
     fun getAllHabits(): LiveData<List<EntityHabits>>
 }

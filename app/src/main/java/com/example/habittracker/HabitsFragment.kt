@@ -1,34 +1,28 @@
 package com.example.habittracker
 
-import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
-import android.view.ContextMenu
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ekn.gruzer.gaugelibrary.Range
 import com.example.habittracker.databinding.FragmentHabitsBinding
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
-import com.example.habittracker.recyclerViewAdapter.MVVM.HabitDatabase
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
-import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModelFactory
 import com.example.habittracker.recyclerViewAdapter.RecyclerViewAdapter
-import com.example.habittracker.recyclerViewAdapter.SwipeCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 
@@ -84,10 +78,6 @@ class HabitsFragment : Fragment() {
             }
         })
 
-//        val viewModelFactory = HabitViewModelFactory(requireActivity().application)
-//        viewModel = ViewModelProvider(this, viewModelFactory).get(HabitViewModel::class.java)
-
-
 
         val range = Range()
         range.color = Color.parseColor("#ce0000")
@@ -116,13 +106,17 @@ class HabitsFragment : Fragment() {
         val button = bottomSheetDialog.findViewById<Button>(R.id.createHabitBtn)
         button?.setOnClickListener {
             if (editText?.text.toString().isNotEmpty()){
-                val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
-                val currentDateAndTime: String = sdf.format(Date())
+                val customDate = LocalDateTime.parse(
+                    LocalDateTime.now().toString(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
+
+//                val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
+//                val currentDateAndTime: String = sdf.format(Date())
 
                 val newHabit = EntityHabits(
                     title = editText!!.text.toString(),
                     status = false,
-                    time_created = currentDateAndTime)
+                    time_created = customDate)
                 viewModel.addHabit(newHabit)
                 Toast.makeText(context, "${editText.text.toString()} Added", Toast.LENGTH_LONG).show()
                 bottomSheetDialog.hide()
