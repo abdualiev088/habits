@@ -1,4 +1,4 @@
-package com.example.habittracker
+package com.example.habittracker.UI
 
 import android.graphics.Color
 import android.os.Bundle
@@ -15,16 +15,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ekn.gruzer.gaugelibrary.Range
+import com.example.habittracker.R
 import com.example.habittracker.databinding.FragmentHabitsBinding
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
 import com.example.habittracker.recyclerViewAdapter.RecyclerViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.text.SimpleDateFormat
+import com.google.firebase.FirebaseApp
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 import kotlin.properties.Delegates
 
 
@@ -34,7 +33,6 @@ class HabitsFragment : Fragment() {
 
     private lateinit var viewModel: HabitViewModel
     private lateinit var habitsRecyclerView: RecyclerView
-    private lateinit var buttonFAB: FloatingActionButton
 
     private var countHabits by Delegates.notNull<Double>()
 
@@ -49,6 +47,7 @@ class HabitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mAuth = FirebaseApp.getInstance()
 
         viewModel = ViewModelProvider(
             this,
@@ -129,7 +128,7 @@ class HabitsFragment : Fragment() {
 
                 val newHabit = EntityHabits(
                     title = editText!!.text.toString(),
-                    status = true,
+                    status = false,
                     time_created = customDate)
                 viewModel.addHabit(newHabit)
                 Toast.makeText(context, "${editText.text.toString()} Added", Toast.LENGTH_LONG).show()

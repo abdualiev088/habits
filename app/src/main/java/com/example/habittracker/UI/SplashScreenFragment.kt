@@ -1,4 +1,4 @@
-package com.example.habittracker
+package com.example.habittracker.UI
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.example.habittracker.R
 import com.example.habittracker.databinding.FragmentSplashScreenBinding
 
 class SplashScreenFragment : Fragment() {

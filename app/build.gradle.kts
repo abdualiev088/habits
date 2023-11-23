@@ -3,6 +3,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -57,9 +58,11 @@ android {
 
 dependencies {
 
+    implementation("com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0")
 
-//    implementation("com.android.tools.build:gradle:7.3.0")
-
+//    Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation("com.google.firebase:firebase-auth:22.0.0")
 
 //    Swipe reveal
 //    implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")

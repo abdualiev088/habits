@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import com.example.habittracker.databinding.ActivityMainBinding
 import com.example.habittracker.databinding.FragmentSplashScreenBinding
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseApp.initializeApp(this)
         actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.black)))
     }
 }

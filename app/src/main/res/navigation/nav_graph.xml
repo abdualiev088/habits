@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.habittracker.SplashScreenFragment"
+        android:name="com.example.habittracker.UI.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/habitsFragment"
-        android:name="com.example.habittracker.HabitsFragment"
+        android:name="com.example.habittracker.UI.HabitsFragment"
         android:label="fragment_habits"
         tools:layout="@layout/fragment_habits" />
 </navigation>
