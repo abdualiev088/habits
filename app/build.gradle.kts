@@ -1,4 +1,5 @@
 
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -58,7 +59,7 @@ android {
 
 dependencies {
 
-    implementation("com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0")
+    implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
 
 //    Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))

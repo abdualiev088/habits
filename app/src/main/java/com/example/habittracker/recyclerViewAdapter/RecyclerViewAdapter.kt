@@ -3,8 +3,13 @@ package com.example.habittracker.recyclerViewAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.chauthai.swipereveallayout.SwipeRevealLayout
+import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.habittracker.R
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 
@@ -15,12 +20,22 @@ class RecyclerViewAdapter(
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     private val data = ArrayList<EntityHabits>()
+    private val viewBinderHelper = ViewBinderHelper()
 
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
+        val swipeLayout: SwipeRevealLayout
+        val rightButtonsLayout: LinearLayout = itemView.findViewById(R.id.rightButtonsLayout)
+        val completeButton: ImageView = itemView.findViewById(R.id.completeButton)
+        val otherButton: ImageView = itemView.findViewById(R.id.otherButton)
+
         val title: TextView
         val status: TextView
 
         init {
+            // Enable swipe to both directions
+            viewBinderHelper.setOpenOnlyOne(true)
+
+            swipeLayout = view.findViewById(R.id.swipeLayout)
             title = view.findViewById(R.id.title)
             status = view.findViewById(R.id.status)
         }
@@ -37,10 +52,17 @@ class RecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.title.text = data[position].title
+        val item = data[position]
+        holder.title.text = item.title
 
-        holder.status.visibility = if (data[position].status)  View.VISIBLE
+        holder.status.visibility = if (item.status)  View.VISIBLE
         else View.INVISIBLE
+
+        viewBinderHelper.bind(holder.swipeLayout, item.title)
+
+        holder.completeButton.setOnClickListener {
+
+        }
 
     }
     fun updateList(newList: List<EntityHabits>) {

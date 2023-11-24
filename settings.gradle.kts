@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
+        jcenter()
         maven("https://jitpack.io")
         google()
-        mavenCentral()
         gradlePluginPortal()
 
     }
@@ -10,13 +10,11 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        mavenCentral()
+        jcenter()
         maven("https://jitpack.io")
-
+        google()
     }
 }
 
 rootProject.name = "Habit Tracker"
 include(":app")
- 
