@@ -11,6 +11,8 @@ import com.example.habittracker.databinding.FragmentRatingBinding
 
 class RatingFragment : Fragment() {
 
+    private var stateIfLoggedIn = false
+
     lateinit var binding : FragmentRatingBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,14 +20,17 @@ class RatingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRatingBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    private fun checkOutState(stateOfUser: Boolean){
+        when(stateOfUser){
 
+        }
     }
 
 

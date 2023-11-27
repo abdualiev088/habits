@@ -1,4 +1,4 @@
-
+import java.util.regex.Pattern.compile
 
 plugins {
     id("com.android.application")
@@ -45,11 +45,6 @@ android {
         enable = true
     }
 
-//    java {
-//        toolchain {
-//            languageVersion.set(JavaLanguageVersion.of(8))
-//        }
-//    }
     kapt {
         useBuildCache = true
     }
@@ -59,14 +54,14 @@ android {
 
 dependencies {
 
-    implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
+
 
 //    Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-auth:22.0.0")
 
 //    Swipe reveal
-//    implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
+    implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
 
     implementation("com.airbnb.android:lottie:6.1.0")
 

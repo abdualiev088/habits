@@ -7,4 +7,10 @@
         <!--        <font color="#068FFF">create</font>-->
         <!--        <font color="#697077"> your first habit</font>-->
     </string>
+    <string name="login_text">
+        Do you have an account ? Login.
+    </string>
+    <string name="register_text">
+        Do\'t you have an account yet? Register
+    </string>
 </resources>

@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,11 +38,11 @@ class HabitsFragment : Fragment() {
 
     private var countHabits by Delegates.notNull<Double>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentHabitsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -71,6 +73,11 @@ class HabitsFragment : Fragment() {
         val habitAdapter = RecyclerViewAdapter()
         val rc_manager = LinearLayoutManager(context)
         habitsRecyclerView.adapter = habitAdapter
+
+//        swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
+//        swipeLayout.addDrag(SwipeLayout.DragEdge.Left, swipeLayout.findViewById(R.id.delete))
+//        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, swipeLayout.findViewById(R.id.done))
+
 
         rc_manager.orientation = LinearLayoutManager.VERTICAL
         habitsRecyclerView.layoutManager = rc_manager
@@ -138,23 +145,6 @@ class HabitsFragment : Fragment() {
     }
 
 
-//    override fun onCreateContextMenu(
-//        menu: ContextMenu,
-//        v: View,
-//        menuInfo: ContextMenu.ContextMenuInfo?
-//    ) {
-//        super.onCreateContextMenu(menu, v, menuInfo)
-//        val inflater = MenuInflater(v.context)
-//        inflater.inflate(R.menu.swipe_buttons, menu)
-//    }
-
-//    private fun attachToRv(rv: RecyclerView){
-//
-//        val swipeController = SwipeCallback()
-//        val touchHelper = ItemTouchHelper(swipeController)
-//        touchHelper.attachToRecyclerView(rv)
-//
-//    }
 
     private fun ifNoData(){
 

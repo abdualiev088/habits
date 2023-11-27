@@ -7,6 +7,7 @@
     <color name="status_color">#B3B3B3</color>
     <color name="bottom_background">#F2F1FA</color>
     <color name="blue">#068FFF</color>
-    <color name="cancel_orange">#FDC229</color>
+
     <color name="red">#FF0000</color>
+
 </resources>

@@ -3,9 +3,6 @@ package com.example.habittracker.recyclerViewAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.SwipeRevealLayout
@@ -23,21 +20,14 @@ class RecyclerViewAdapter(
     private val viewBinderHelper = ViewBinderHelper()
 
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
-        val swipeLayout: SwipeRevealLayout
-        val rightButtonsLayout: LinearLayout = itemView.findViewById(R.id.rightButtonsLayout)
-        val completeButton: ImageView = itemView.findViewById(R.id.completeButton)
-        val otherButton: ImageView = itemView.findViewById(R.id.otherButton)
-
         val title: TextView
         val status: TextView
+        val swipeRevealLayout : SwipeRevealLayout
 
         init {
-            // Enable swipe to both directions
-            viewBinderHelper.setOpenOnlyOne(true)
-
-            swipeLayout = view.findViewById(R.id.swipeLayout)
             title = view.findViewById(R.id.title)
             status = view.findViewById(R.id.status)
+            swipeRevealLayout = view.findViewById(R.id.sw_item)
         }
     }
 
@@ -52,17 +42,14 @@ class RecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
-        holder.title.text = item.title
+        val item = data.get(position)
+        holder.title.text = data[position].title
 
-        holder.status.visibility = if (item.status)  View.VISIBLE
+        holder.status.visibility = if (data[position].status)  View.VISIBLE
         else View.INVISIBLE
 
-        viewBinderHelper.bind(holder.swipeLayout, item.title)
-
-        holder.completeButton.setOnClickListener {
-
-        }
+        viewBinderHelper.setOpenOnlyOne(true)
+        viewBinderHelper.bind(holder.swipeRevealLayout, item.toString())
 
     }
     fun updateList(newList: List<EntityHabits>) {

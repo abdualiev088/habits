@@ -3,9 +3,10 @@ package com.example.habittracker
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
+import androidx.fragment.app.Fragment
+import com.example.habittracker.UI.HabitsFragment
+import com.example.habittracker.UI.RatingFragment
 import com.example.habittracker.databinding.ActivityMainBinding
-import com.example.habittracker.databinding.FragmentSplashScreenBinding
 import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
@@ -18,5 +19,26 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
         actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.black)))
+
+
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.habitsMenuItem -> {
+                    loadFragment(HabitsFragment())
+                    false
+                }
+                R.id.ratingMenuItem -> {
+                    loadFragment(RatingFragment())
+                    false
+                }
+            }
+            true
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container_view, fragment)
+        transaction.commit()
     }
 }

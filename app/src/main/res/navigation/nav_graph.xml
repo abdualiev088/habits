@@ -2,21 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/splashScreenFragment">
+    android:id="@+id/nav_graph">
 
-    <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="com.example.habittracker.UI.SplashScreenFragment"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
-        <action
-            android:id="@+id/action_splashScreenFragment_to_habitsFragment"
-            app:destination="@id/habitsFragment" />
-    </fragment>
     <fragment
         android:id="@+id/habitsFragment"
         android:name="com.example.habittracker.UI.HabitsFragment"
         android:label="fragment_habits"
         tools:layout="@layout/fragment_habits" />
+    <fragment
+        android:id="@+id/topRating2"
+        android:name="com.example.habittracker.UI.TopRating"
+        android:label="fragment_top_rating"
+        tools:layout="@layout/fragment_top_rating" />
+    <activity
+        android:id="@+id/splashScreenActivity"
+        android:name="com.example.habittracker.UI.SplashScreenActivity"
+        android:label="activity_splash_screen"
+        tools:layout="@layout/activity_splash_screen" />
 </navigation>
