@@ -8,6 +8,7 @@
 
     <LinearLayout
         android:id="@+id/noHabitsUi"
+        android:visibility="gone"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:gravity="center"
@@ -41,7 +42,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/haveHabitsUi"
         android:orientation="vertical"
         android:layout_width="match_parent"

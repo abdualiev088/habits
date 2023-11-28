@@ -3,16 +3,17 @@ package com.example.habittracker.recyclerViewAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.habittracker.R
+import com.example.habittracker.UI.HabitsFragment
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 
 class RecyclerViewAdapter(
-
-
+    private val listener : HabitsFragment.OnItemClickListener
 ):
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
@@ -23,12 +24,23 @@ class RecyclerViewAdapter(
         val title: TextView
         val status: TextView
         val swipeRevealLayout : SwipeRevealLayout
+        val deletebtn: ImageView
+
 
         init {
             title = view.findViewById(R.id.title)
             status = view.findViewById(R.id.status)
             swipeRevealLayout = view.findViewById(R.id.sw_item)
+            deletebtn = view.findViewById(R.id.delete)
+            deletebtn.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION){
+                    listener.onButtonClick(data[position])
+                }
+            }
+
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,7 +63,9 @@ class RecyclerViewAdapter(
         viewBinderHelper.setOpenOnlyOne(true)
         viewBinderHelper.bind(holder.swipeRevealLayout, item.toString())
 
+
     }
+
     fun updateList(newList: List<EntityHabits>) {
         // on below line we are clearing
         // our notes array list
@@ -63,6 +77,8 @@ class RecyclerViewAdapter(
         // change method to notify our adapter.
         notifyDataSetChanged()
     }
+//    interface Delete {
 
+//    }
 
 }

@@ -20,6 +20,9 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
 
     val repository: HabitRepository
 
+//    private val _habitList = MutableLiveData<List<EntityHabits>>()
+//    val habitList: LiveData<List<EntityHabits>> get() = _habitList
+
     init {
         val dao = HabitDatabase.getDatabase(application).getNotesDao()
         repository = HabitRepository(dao)
@@ -38,6 +41,14 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
     fun updateCountHabits(value: Double) {
         _countHabits.value = value
     }
+
+    fun updateStatus(userId: EntityHabits) {
+        viewModelScope.launch {
+            repository.update(userId)
+            // Optionally, fetch updated data and update the LiveData
+        }
+    }
+
 
 
 }

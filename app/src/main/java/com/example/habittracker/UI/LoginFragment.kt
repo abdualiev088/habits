@@ -7,19 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.habittracker.R
 import com.example.habittracker.databinding.FragmentHabitsBinding
+import com.example.habittracker.databinding.FragmentLoginBinding
 import com.example.habittracker.databinding.FragmentRatingBinding
 
-class RatingFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     private var stateIfLoggedIn = false
 
-    lateinit var binding : FragmentRatingBinding
+    lateinit var binding : FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentRatingBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 

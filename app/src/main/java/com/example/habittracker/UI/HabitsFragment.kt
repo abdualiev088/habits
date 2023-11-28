@@ -3,15 +3,13 @@ package com.example.habittracker.UI
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log.d
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +21,7 @@ import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
 import com.example.habittracker.recyclerViewAdapter.RecyclerViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.properties.Delegates
@@ -49,7 +47,25 @@ class HabitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mAuth = FirebaseApp.getInstance()
+//        val mAuth = FirebaseAuth.getInstance()
+
+//        mAuth.createUserWithEmailAndPassword("email1@gmail.com", "password123")
+//            .addOnCompleteListener(requireActivity()) { task ->
+//                if (task.isSuccessful()) {
+//                    // Sign in success
+//                    val user = mAuth.currentUser
+//                    Toast.makeText(
+//                        context, "Success.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
+//                    // If sign in fails, display a message to the user.
+//                    Toast.makeText(
+//                        context, "Authentication failed.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
 
         viewModel = ViewModelProvider(
             this,
@@ -69,20 +85,24 @@ class HabitsFragment : Fragment() {
             }
         })
 
+        val listener = object : OnItemClickListener{
+            override fun onButtonClick(habit: EntityHabits) {
+                viewModel.deleteHabit(habit)
+            }
+        }
+
         habitsRecyclerView = binding.rc
-        val habitAdapter = RecyclerViewAdapter()
+        val habitAdapter = RecyclerViewAdapter(listener)
         val rc_manager = LinearLayoutManager(context)
         habitsRecyclerView.adapter = habitAdapter
 
-//        swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
-//        swipeLayout.addDrag(SwipeLayout.DragEdge.Left, swipeLayout.findViewById(R.id.delete))
-//        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, swipeLayout.findViewById(R.id.done))
 
 
         rc_manager.orientation = LinearLayoutManager.VERTICAL
         habitsRecyclerView.layoutManager = rc_manager
 
-
+        binding.rc.adapter
+//        55 000
 
         viewModel.countHabits.observe(viewLifecycleOwner, Observer { count ->
             count?.let {
@@ -117,8 +137,7 @@ class HabitsFragment : Fragment() {
         binding.createTask.setOnClickListener {
             showBottomSheetDialog()
         }
-//        habitList()
-//        observeData(halfGauge)
+
     }
     private fun showBottomSheetDialog(){
         val bottomSheetDialog = BottomSheetDialog(requireContext())
@@ -149,5 +168,10 @@ class HabitsFragment : Fragment() {
     private fun ifNoData(){
 
     }
+    interface OnItemClickListener {
+        fun onButtonClick(habit: EntityHabits)
+    }
+
+
 }
 
