@@ -28,11 +28,6 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-//    private fun checkOutState(stateOfUser: Boolean){
-//        when(stateOfUser){
-//
-//        }
-//    }
 
 
 }

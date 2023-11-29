@@ -20,6 +20,8 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
 
     val repository: HabitRepository
 
+    private val deletedItems = mutableListOf<EntityHabits>()
+
 //    private val _habitList = MutableLiveData<List<EntityHabits>>()
 //    val habitList: LiveData<List<EntityHabits>> get() = _habitList
 
@@ -32,7 +34,19 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
 
     fun deleteHabit(habitData: EntityHabits) = viewModelScope.launch(Dispatchers.IO){
         repository.delete(habitData)
+        deletedItems.add(habitData)
     }
+
+    fun undoDelete() {
+        viewModelScope.launch {
+            if (deletedItems.isNotEmpty()) {
+                val lastDeletedItem = deletedItems.removeAt(deletedItems.size - 1)
+                repository.insert(lastDeletedItem)
+            }
+        }
+
+    }
+
 
     fun addHabit(habitData: EntityHabits) = viewModelScope.launch(Dispatchers.IO){
         repository.insert(habitData)
@@ -42,10 +56,15 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
         _countHabits.value = value
     }
 
-    fun updateStatus(userId: EntityHabits) {
+    fun updateStatusTrue(itemId: Long) {
         viewModelScope.launch {
-            repository.update(userId)
-            // Optionally, fetch updated data and update the LiveData
+            repository.updateStatusTrue(itemId)
+        }
+    }
+
+    fun updateStatusFalse(itemId: Long) {
+        viewModelScope.launch {
+            repository.updateStatusFalse(itemId)
         }
     }
 

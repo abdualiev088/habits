@@ -25,6 +25,16 @@
 
         <ImageView
             android:padding="20dp"
+            android:id="@+id/unDone"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/close"
+            app:tint="@color/white"
+            android:background="@color/status_color"/>
+
+        <ImageView
+            android:padding="20dp"
             android:id="@+id/done"
             android:layout_weight="0.5"
             android:layout_width="match_parent"
@@ -32,6 +42,7 @@
             android:src="@drawable/baseline_done_24"
             app:tint="@color/white"
             android:background="@color/black"/>
+
     </LinearLayout>
 
     <LinearLayout

@@ -86,13 +86,21 @@ class HabitsFragment : Fragment() {
         })
 
         val listener = object : OnItemClickListener{
-            override fun onButtonClick(habit: EntityHabits) {
+            override fun onDeleteClick(habit: EntityHabits) {
                 viewModel.deleteHabit(habit)
+            }
+
+            override fun onDoneClick(habit: EntityHabits) {
+                viewModel.updateStatusTrue(habit.id)
+            }
+
+            override fun onUnDoneClick(habit: EntityHabits) {
+                viewModel.updateStatusFalse(habit.id)
             }
         }
 
         habitsRecyclerView = binding.rc
-        val habitAdapter = RecyclerViewAdapter(listener)
+        val habitAdapter = RecyclerViewAdapter(listener = listener, viewModel = viewModel)
         val rc_manager = LinearLayoutManager(context)
         habitsRecyclerView.adapter = habitAdapter
 
@@ -169,7 +177,11 @@ class HabitsFragment : Fragment() {
 
     }
     interface OnItemClickListener {
-        fun onButtonClick(habit: EntityHabits)
+        fun onDeleteClick(habit: EntityHabits)
+
+        fun onDoneClick(habit: EntityHabits)
+
+        fun onUnDoneClick(habit: EntityHabits)
     }
 
 

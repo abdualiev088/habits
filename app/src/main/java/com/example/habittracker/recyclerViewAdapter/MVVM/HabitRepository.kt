@@ -18,8 +18,12 @@ class HabitRepository(private var habitsDao: HabitsDao) {
         habitsDao.delete(habit)
     }
 
-    suspend fun update(habitId: EntityHabits){
-        habitsDao.updateStatusTrue(habitId)
+    suspend fun updateStatusTrue(itemId: Long){
+        habitsDao.updateStatusTrue(itemId)
+    }
+
+    suspend fun updateStatusFalse(itemId: Long){
+        habitsDao.updateStatusFalse(itemId)
     }
 
 

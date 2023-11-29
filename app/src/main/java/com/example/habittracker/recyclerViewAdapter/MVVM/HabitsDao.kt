@@ -23,6 +23,9 @@ interface HabitsDao {
     @Query("SELECT COUNT(status) from habits WHERE status == 1")
     fun getCompletedHabitsCount(): LiveData<Double>
 
-    @Update
-    fun updateStatusTrue(habit : EntityHabits)
+    @Query("UPDATE habits SET status = :newStatus WHERE id = :itemId")
+    suspend fun updateStatusTrue(itemId: Long, newStatus: Boolean= true)
+
+    @Query("UPDATE habits SET status = :newStatus WHERE id = :itemId")
+    suspend fun updateStatusFalse(itemId: Long, newStatus: Boolean= false)
 }

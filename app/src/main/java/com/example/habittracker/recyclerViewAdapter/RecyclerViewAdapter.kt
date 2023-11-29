@@ -11,8 +11,11 @@ import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.habittracker.R
 import com.example.habittracker.UI.HabitsFragment
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
+import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class RecyclerViewAdapter(
+    private val viewModel: HabitViewModel,
     private val listener : HabitsFragment.OnItemClickListener
 ):
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
@@ -25,6 +28,8 @@ class RecyclerViewAdapter(
         val status: TextView
         val swipeRevealLayout : SwipeRevealLayout
         val deletebtn: ImageView
+        val doneBtn: ImageView
+        val unDoneBtn : ImageView
 
 
         init {
@@ -32,10 +37,31 @@ class RecyclerViewAdapter(
             status = view.findViewById(R.id.status)
             swipeRevealLayout = view.findViewById(R.id.sw_item)
             deletebtn = view.findViewById(R.id.delete)
+            doneBtn = view.findViewById(R.id.done)
+            unDoneBtn = view.findViewById(R.id.unDone)
+
             deletebtn.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION){
-                    listener.onButtonClick(data[position])
+                    listener.onDeleteClick(data[position])
+
+                    val snackbar = Snackbar.make(itemView, "Item deleted", Snackbar.LENGTH_LONG)
+                    snackbar.setAction("Undo") {
+                        viewModel.undoDelete()
+                    }
+                    snackbar.show()
+                }
+            }
+            doneBtn.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION){
+                    listener.onDoneClick(data[position])
+                }
+            }
+            unDoneBtn.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION){
+                    listener.onUnDoneClick(data[position])
                 }
             }
 
