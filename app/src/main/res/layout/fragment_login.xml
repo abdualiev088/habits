@@ -40,7 +40,7 @@
                     android:textColor="@color/black"
                     android:text="Please provide your email"/>
                 <TextView
-                    android:id="@+id/register_text"
+                    android:id="@+id/registerText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

@@ -6,17 +6,17 @@
 
     <fragment
         android:id="@+id/habitsFragment"
-        android:name="com.example.habittracker.UI.HabitsFragment"
+        android:name="com.example.habittracker.ui.HabitsFragment"
         android:label="fragment_habits"
         tools:layout="@layout/fragment_habits" />
     <fragment
         android:id="@+id/topRating2"
-        android:name="com.example.habittracker.UI.TopRating"
+        android:name="com.example.habittracker.ui.TopRating"
         android:label="fragment_top_rating"
         tools:layout="@layout/fragment_top_rating" />
     <activity
         android:id="@+id/splashScreenActivity"
-        android:name="com.example.habittracker.UI.SplashScreenActivity"
+        android:name="com.example.habittracker.ui.SplashScreenActivity"
         android:label="activity_splash_screen"
         tools:layout="@layout/activity_splash_screen" />
 </navigation>

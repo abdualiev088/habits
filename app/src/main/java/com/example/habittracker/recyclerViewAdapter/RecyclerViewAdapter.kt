@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.habittracker.R
-import com.example.habittracker.UI.HabitsFragment
+import com.example.habittracker.ui.HabitsFragment
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
 import com.google.android.material.snackbar.Snackbar

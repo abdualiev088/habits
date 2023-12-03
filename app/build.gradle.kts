@@ -39,6 +39,11 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerVersion = "1.8.0"
     }
 
     dataBinding {
@@ -48,13 +53,23 @@ android {
     kapt {
         useBuildCache = true
     }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.3.2"
+//    }
+
 
 }
 
 
 dependencies {
 
-
+    //    using compose
+    val compose_version = "1.4.0"
+    implementation("androidx.compose.ui:ui:${compose_version}")
+    implementation ("androidx.compose.material:material:$compose_version")
+    implementation ("androidx.compose.ui:ui-tooling-preview:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$compose_version")
 
 //    Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))

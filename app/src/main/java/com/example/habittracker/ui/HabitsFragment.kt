@@ -1,4 +1,4 @@
-package com.example.habittracker.UI
+package com.example.habittracker.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -21,7 +21,6 @@ import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
 import com.example.habittracker.recyclerViewAdapter.RecyclerViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.properties.Delegates
@@ -47,25 +46,7 @@ class HabitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val mAuth = FirebaseAuth.getInstance()
 
-//        mAuth.createUserWithEmailAndPassword("email1@gmail.com", "password123")
-//            .addOnCompleteListener(requireActivity()) { task ->
-//                if (task.isSuccessful()) {
-//                    // Sign in success
-//                    val user = mAuth.currentUser
-//                    Toast.makeText(
-//                        context, "Success.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                } else {
-//                    // If sign in fails, display a message to the user.
-//                    Toast.makeText(
-//                        context, "Authentication failed.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
 
         viewModel = ViewModelProvider(
             this,

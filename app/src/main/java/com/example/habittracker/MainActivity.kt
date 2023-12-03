@@ -4,9 +4,10 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.habittracker.UI.HabitsFragment
-import com.example.habittracker.UI.RatingFragment
+import com.example.habittracker.ui.HabitsFragment
+import com.example.habittracker.ui.RatingFragment
 import com.example.habittracker.databinding.ActivityMainBinding
+import com.example.habittracker.ui.RegistrationFragment
 import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {

@@ -1,11 +1,10 @@
-package com.example.habittracker.UI
+package com.example.habittracker.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.navigation.fragment.findNavController
 import com.example.habittracker.MainActivity
 import com.example.habittracker.R
 import com.example.habittracker.databinding.ActivitySplashScreenBinding
