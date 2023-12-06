@@ -9,32 +9,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="20dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/top_rating" />
-
-        <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="Top Ratings"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:background="@color/white">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="15dp"
+                android:layout_height="wrap_content">
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:layout_marginEnd="12dp"
+                    app:lottie_rawRes="@raw/top_rating" />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Top Ratings"/>
+                <ImageView
+                    android:id="@+id/logoutBtn"
+                    app:tint="@color/red"
+                    android:src="@drawable/baseline_logout_24"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/composeView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:composableName="com.example.habittracker.ui.compose.RatingRvItemKt" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </FrameLayout>

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.habittracker.ui.HabitsFragment
 import com.example.habittracker.ui.RatingFragment
 import com.example.habittracker.databinding.ActivityMainBinding
+import com.example.habittracker.ui.LoginFragment
 import com.example.habittracker.ui.RegistrationFragment
 import com.google.firebase.FirebaseApp
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
                 R.id.ratingMenuItem -> {
-                    loadFragment(RatingFragment())
+                    loadFragment(LoginFragment())
                     false
                 }
             }

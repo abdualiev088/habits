@@ -3,11 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="secondary">#697077</color>
-    <color name="rc_item_background">#EAEAEA</color>
+    <color name="rc_item_background">#E4F1FF</color>
     <color name="status_color">#B3B3B3</color>
     <color name="bottom_background">#F2F1FA</color>
     <color name="blue">#068FFF</color>
 
     <color name="red">#FF0000</color>
+    
+    <color name="color_toolbar">#413C69</color>
 
 </resources>

@@ -21,12 +21,15 @@ class LoginFragment : Fragment() {
 
     private var stateIfLoggedIn = false
 
-    lateinit var email : TextInputLayout
-    lateinit var password1 : TextInputLayout
+    private lateinit var email : TextInputLayout
+    private lateinit var password1 : TextInputLayout
+    private lateinit var mAuth: FirebaseAuth
 
     var areFieldsFill = false
 
     lateinit var binding : FragmentLoginBinding
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,17 +41,15 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
         email = binding.editTextMailLogin
         password1 = binding.editTextPasswordLogin
         fieldsValidation()
         onClickLogin(binding.registerText)
         binding.loginBtn.setOnClickListener {
             if (areFieldsFill) {
+                binding.progressBarLog.visibility = View.VISIBLE
                 requestToLogin(email.editText?.text.toString(), password1.editText?.text.toString())
-                Log.d(
-                    "logValues",
-                    "Email: ${email.editText?.text.toString()} Password: ${password1.editText?.text.toString()}"
-                )
             }
             else{
                 Toast.makeText(
@@ -60,10 +61,11 @@ class LoginFragment : Fragment() {
     }
 
     fun requestToLogin(email: String, password: String){
-        val mAuth = FirebaseAuth.getInstance()
+//        mAuth = FirebaseAuth.getInstance()
 
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
+                binding.progressBarLog.visibility = View.GONE
                 if (task.isSuccessful()) {
                     // Sign in success
                     val user = mAuth.currentUser
@@ -87,6 +89,13 @@ class LoginFragment : Fragment() {
                 binding.editTextPasswordLogin.error = "Password is not valid"
                 areFieldsFill = false
             }
+        }
+    }
+    override fun onStart() {
+        super.onStart()
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
+            loadFragment(RatingFragment())
         }
     }
 

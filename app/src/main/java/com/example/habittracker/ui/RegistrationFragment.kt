@@ -21,9 +21,11 @@ class RegistrationFragment : Fragment() {
     private var stateIfLoggedIn = false
     private var arePasswordsEqual: Boolean = false
 
-    lateinit var email : TextInputLayout
-    lateinit var password1 :TextInputLayout
-    lateinit var password2 : TextInputLayout
+    private lateinit var email : TextInputLayout
+    private lateinit var password1 :TextInputLayout
+    private lateinit var password2 : TextInputLayout
+
+    private lateinit var mAuth : FirebaseAuth
 
 
     override fun onCreateView(
@@ -38,6 +40,8 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mAuth = FirebaseAuth.getInstance()
+
         email = binding.editTextMail
         password1 = binding.editTextPassword
         password2 = binding.editTextPasswordConfirm
@@ -47,8 +51,8 @@ class RegistrationFragment : Fragment() {
 
         binding.registerBtn.setOnClickListener {
             if (arePasswordsEqual) {
+                binding.progressBarReg.visibility = View.VISIBLE
                 requestToRegister(email.editText?.text.toString(), password1.editText?.text.toString())
-                d("logValues", "Email: ${email.editText?.text.toString()} Password: ${password1.editText?.text.toString()}")
             }
         }
 
@@ -82,12 +86,18 @@ class RegistrationFragment : Fragment() {
 
         }
     }
+    override fun onStart() {
+        super.onStart()
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
+            loadFragment(RatingFragment())
+        }
+    }
 
     fun requestToRegister(email: String, password: String){
-        val mAuth = FirebaseAuth.getInstance()
-
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
+                binding.progressBarReg.visibility = View.GONE
                 if (task.isSuccessful()) {
                     // Registration successful
                     val user = mAuth.currentUser
@@ -104,7 +114,6 @@ class RegistrationFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                d("reg", task.exception.toString())
             }
     }
 
