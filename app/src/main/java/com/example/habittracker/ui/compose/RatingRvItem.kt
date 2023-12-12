@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
 import com.example.habittracker.firebase.UserDataset
+import java.lang.Math.round
 
 @Composable
 fun RecyclerItem(data: UserDataset?){
@@ -35,12 +36,11 @@ fun RecyclerItem(data: UserDataset?){
             color = Color.Black,
             fontWeight = FontWeight.Black
         )
+        val task_percent = (data.completedHabits?.div(data.allHabits!!)?.times(100))
+        val roundedNumber = task_percent?.toInt().toString() + " %"
+
         Text(
-            text = data!!.allHabits.toString(),
-            color = Color.Black,
-        )
-        Text(
-            text = data!!.completedHabits.toString(),
+            text = roundedNumber,
             color = Color.Black,
         )
     }
