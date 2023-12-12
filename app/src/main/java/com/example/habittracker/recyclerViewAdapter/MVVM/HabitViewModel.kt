@@ -22,9 +22,6 @@ class HabitViewModel(application: Application): AndroidViewModel(application) {
 
     private val deletedItems = mutableListOf<EntityHabits>()
 
-//    private val _habitList = MutableLiveData<List<EntityHabits>>()
-//    val habitList: LiveData<List<EntityHabits>> get() = _habitList
-
     init {
         val dao = HabitDatabase.getDatabase(application).getNotesDao()
         repository = HabitRepository(dao)

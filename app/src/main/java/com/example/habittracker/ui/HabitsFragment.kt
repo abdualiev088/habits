@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,13 +18,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ekn.gruzer.gaugelibrary.Range
 import com.example.habittracker.R
 import com.example.habittracker.databinding.FragmentHabitsBinding
+import com.example.habittracker.firebase.UserDataset
 import com.example.habittracker.recyclerViewAdapter.MVVM.EntityHabits
 import com.example.habittracker.recyclerViewAdapter.MVVM.HabitViewModel
 import com.example.habittracker.recyclerViewAdapter.RecyclerViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.childEvents
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.properties.Delegates
 
 
 class HabitsFragment : Fragment() {
@@ -33,7 +38,8 @@ class HabitsFragment : Fragment() {
     private lateinit var viewModel: HabitViewModel
     private lateinit var habitsRecyclerView: RecyclerView
 
-    private var countHabits by Delegates.notNull<Double>()
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var databaseReference : DatabaseReference
 
 
     override fun onCreateView(
@@ -46,8 +52,8 @@ class HabitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        mAuth = FirebaseAuth.getInstance()
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
@@ -109,6 +115,16 @@ class HabitsFragment : Fragment() {
                 viewModel.allCompletedHabitsCount.observe(viewLifecycleOwner, Observer {countTrue ->
                     countTrue?.let {
                         halfGauge.value = countTrue
+                        val userUid = mAuth.currentUser?.uid
+                        val email = mAuth.currentUser?.email.toString()
+                        if (userUid != null){
+                            val userHabits = UserDataset(
+                                count,
+                                countTrue,
+                                email,
+                            )
+                            databaseReference.child(userUid).setValue(userHabits)
+                        }
                     }
                 })
             }
@@ -165,6 +181,11 @@ class HabitsFragment : Fragment() {
         fun onUnDoneClick(habit: EntityHabits)
     }
 
+    private fun loadFragment(fragment: Fragment){
+        val transaction = activity?.supportFragmentManager?.beginTransaction()!!
+        transaction.replace(R.id.fragment_container_view, fragment)
+        transaction.commit()
+    }
 
 }
 

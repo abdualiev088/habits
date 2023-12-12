@@ -19,8 +19,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
 
-    private var stateIfLoggedIn = false
-
     private lateinit var email : TextInputLayout
     private lateinit var password1 : TextInputLayout
     private lateinit var mAuth: FirebaseAuth
@@ -69,6 +67,7 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful()) {
                     // Sign in success
                     val user = mAuth.currentUser
+                    d("userUid", user?.uid.toString())
                     loadFragment(RatingFragment())
                 } else {
                     // If sign in fails, display a message to the user.
@@ -91,13 +90,7 @@ class LoginFragment : Fragment() {
             }
         }
     }
-    override fun onStart() {
-        super.onStart()
-        val currentUser = mAuth.currentUser
-        if (currentUser != null) {
-            loadFragment(RatingFragment())
-        }
-    }
+
 
     private fun loadFragment(fragment: Fragment){
         val transaction = activity?.supportFragmentManager?.beginTransaction()!!
@@ -110,4 +103,11 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
+            loadFragment(RatingFragment())
+        }
+    }
 }

@@ -86,13 +86,6 @@ class RegistrationFragment : Fragment() {
 
         }
     }
-    override fun onStart() {
-        super.onStart()
-        val currentUser = mAuth.currentUser
-        if (currentUser != null) {
-            loadFragment(RatingFragment())
-        }
-    }
 
     fun requestToRegister(email: String, password: String){
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -113,6 +106,7 @@ class RegistrationFragment : Fragment() {
                         context, "Authentication failed.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    d("authFailed", task.exception.toString())
                 }
             }
     }

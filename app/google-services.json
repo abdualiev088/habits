@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "494307005465",
-    "project_id": "project1-ef392",
-    "storage_bucket": "project1-ef392.appspot.com"
+    "project_number": "875462883453",
+    "project_id": "start-8ae92",
+    "storage_bucket": "start-8ae92.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:494307005465:android:f0e8dc1ab2ccc490ce8688",
+        "mobilesdk_app_id": "1:875462883453:android:2249b95249a510a2529914",
         "android_client_info": {
           "package_name": "com.example.habittracker"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "875462883453-rao2m2l6hc91frna30gd5s6ualupo2cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyC_H8ZVWMhm6zIhP3kBYmOt7V5LXgKQTyQ"
+          "current_key": "AIzaSyBsdz9oRlUtyDX1MHeTxlm7htGvY6_qKfo"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875462883453-rao2m2l6hc91frna30gd5s6ualupo2cr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

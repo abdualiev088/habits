@@ -63,6 +63,12 @@ android {
 
 dependencies {
 
+//    firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
+//    implementation("com.google.firebase:firebase-core")
+
     //    using compose
     val compose_version = "1.4.0"
     implementation("androidx.compose.ui:ui:${compose_version}")
@@ -71,9 +77,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$compose_version")
 
-//    Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
-    implementation("com.google.firebase:firebase-auth:22.0.0")
+
 
 //    Swipe reveal
     implementation("com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1")
