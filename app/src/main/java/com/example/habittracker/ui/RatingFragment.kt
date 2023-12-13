@@ -6,17 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -26,16 +19,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import com.airbnb.lottie.utils.Utils
 import com.example.habittracker.R
 import com.example.habittracker.databinding.FragmentRatingBinding
 import com.example.habittracker.firebase.UserDataset
-import com.example.habittracker.recyclerViewAdapter.HabitData
 import com.example.habittracker.ui.compose.RecyclerItem
-import com.google.android.material.resources.TypefaceUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -46,23 +35,6 @@ import com.google.firebase.database.ValueEventListener
 
 
 class RatingFragment : Fragment() {
-
-    val data = listOf(
-        HabitData("onehiuhuirhtgiouhs", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001"),
-        HabitData("one", false, "10.02.2001")
-    )
 
     private var _binding: FragmentRatingBinding? = null
     private val binding: FragmentRatingBinding
@@ -92,7 +64,6 @@ class RatingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance().getReference( "Users")
-//        val userUid = mAuth.uid
 
         if(mAuth.currentUser == null){
             loadFragment(LoginFragment())
@@ -130,8 +101,6 @@ class RatingFragment : Fragment() {
 
     @Composable
     fun UserList(){
-
-
         var userList by remember { mutableStateOf(emptyList<UserDataset>()) }
         var sortedUserList by remember { mutableStateOf(emptyList<UserDataset>()) }
 
@@ -156,18 +125,14 @@ class RatingFragment : Fragment() {
                                         updatedList.add(user)
                                     }
                                 }
-//                                val users = snapshot.getValue(UserDataset::class.java)
-//                                d("firebase", ": " + users.toString())
                                 userList = updatedList.toList()
-                                sortedUserList = userList.sortedBy { it.roundedNumber ?: 0.0 }
+                                sortedUserList = userList.sortedWith (compareByDescending {it.roundedNumber ?: 0.0 })
                                 d("firebase", "sortedUserList " + sortedUserList.toString())
 
                             }
                         } catch (e: DatabaseException) {
                             d("firebase", "E: " + e.toString())
-                        // Handle the exception or log it
                         }
-//
                     }
 
                     override fun onCancelled(error: DatabaseError) {

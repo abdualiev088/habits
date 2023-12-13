@@ -168,11 +168,6 @@ class HabitsFragment : Fragment() {
         }
     }
 
-
-
-    private fun ifNoData(){
-
-    }
     interface OnItemClickListener {
         fun onDeleteClick(habit: EntityHabits)
 

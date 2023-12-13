@@ -1,9 +1,6 @@
 package com.example.habittracker.recyclerViewAdapter.MVVM
 
 import androidx.lifecycle.LiveData
-import com.example.habittracker.recyclerViewAdapter.HabitData
-import java.sql.Timestamp
-import java.util.Date
 
 class HabitRepository(private var habitsDao: HabitsDao) {
 

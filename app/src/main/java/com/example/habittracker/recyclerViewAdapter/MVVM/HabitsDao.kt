@@ -6,8 +6,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
-import com.example.habittracker.recyclerViewAdapter.HabitData
 
 @Dao
 interface HabitsDao {
