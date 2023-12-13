@@ -133,6 +133,7 @@ class RatingFragment : Fragment() {
 
 
         var userList by remember { mutableStateOf(emptyList<UserDataset>()) }
+        var sortedUserList by remember { mutableStateOf(emptyList<UserDataset>()) }
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -158,7 +159,8 @@ class RatingFragment : Fragment() {
 //                                val users = snapshot.getValue(UserDataset::class.java)
 //                                d("firebase", ": " + users.toString())
                                 userList = updatedList.toList()
-                                d("firebase", ": " + userList.toString())
+                                sortedUserList = userList.sortedBy { it.roundedNumber ?: 0.0 }
+                                d("firebase", "sortedUserList " + sortedUserList.toString())
 
                             }
                         } catch (e: DatabaseException) {
@@ -182,18 +184,16 @@ class RatingFragment : Fragment() {
             }
         }
 
-        d("firebase", "Userlist" +userList.toString())
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            items(userList) {
-                RecyclerItem(data = it)
+
+            items(sortedUserList) {
+                RecyclerItem(index = sortedUserList.indexOf(it), data = it)
             }
-            // We use a LazyColumn since the layout manager of the RecyclerView is a vertical LinearLayoutManager
         }
     }
-//    email, numberOfAllHabits, completedHabits
 
     @Preview(showBackground = true)
     @Composable

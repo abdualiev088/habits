@@ -18,7 +18,7 @@ import com.example.habittracker.firebase.UserDataset
 import java.lang.Math.round
 
 @Composable
-fun RecyclerItem(data: UserDataset?){
+fun RecyclerItem(index: Int, data: UserDataset?){
     Row(
         modifier = Modifier
             .background(colorResource(R.color.rc_item_background))
@@ -29,6 +29,10 @@ fun RecyclerItem(data: UserDataset?){
 
     ){
         Text(
+            text = (index + 1).toString(),
+            color = Color.Black,
+        )
+        Text(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
@@ -36,9 +40,7 @@ fun RecyclerItem(data: UserDataset?){
             color = Color.Black,
             fontWeight = FontWeight.Black
         )
-        val task_percent = (data.completedHabits?.div(data.allHabits!!)?.times(100))
-        val roundedNumber = task_percent?.toInt().toString() + " %"
-
+        val roundedNumber = data.roundedNumber?.toInt().toString() + " %"
         Text(
             text = roundedNumber,
             color = Color.Black,

@@ -117,11 +117,11 @@ class HabitsFragment : Fragment() {
                         halfGauge.value = countTrue
                         val userUid = mAuth.currentUser?.uid
                         val email = mAuth.currentUser?.email.toString()
+                        val task_percent = (countTrue.div(count).times(100))
                         if (userUid != null){
                             val userHabits = UserDataset(
-                                count,
-                                countTrue,
-                                email,
+                                task_percent,
+                                email
                             )
                             databaseReference.child(userUid).setValue(userHabits)
                         }
